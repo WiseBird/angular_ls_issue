@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
+import 'reflect-metadata';
 
-@Component({
+export function WindowComponent(annotation: any) {
+  return function (target: Function) {
+    const metadata = new Component(annotation);
+    Reflect.defineMetadata('annotations', [metadata], target);
+  };
+}
+
+@WindowComponent({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
